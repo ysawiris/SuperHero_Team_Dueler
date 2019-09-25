@@ -53,6 +53,12 @@ class Hero:
         self.name = name
         self.starting_health = starting_health
         self.current_health = 100
+    
+    def add_ability(self, ability):
+        ''' Add ability to abilities list '''
+        #TODO: Add ability object to abilities:List
+        self.abilities.append(ability)
+
 
 
 if __name__ == "__main__":
@@ -70,4 +76,7 @@ if __name__ == "__main__":
     print(my_hero.name)
     print(my_hero.starting_health)
     print(my_hero.current_health)
+    hero.add_ability(ability)
+    print(hero.abilities)
+    
     
