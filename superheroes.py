@@ -41,7 +41,7 @@ class Armor:
 
 class Hero:
     def __init__(self, name, starting_health = 100):
-        '''<expand for comments>
+        ''' <expand for comments>
             Instance properties:
                 abilities: List
                 armors: List
@@ -58,6 +58,24 @@ class Hero:
         self.name = name
         self.starting_health = starting_health
         self.current_health = starting_health
+        self.deaths = 0
+        self.kills = 0 
+
+    def add_kills(self, num_kills):
+        ''' <expand for commments>
+            Update kills with num_kills
+            '''
+            #TODO: This method should add the number of kills to self.kills 
+        self.kills += num_kills
+        
+    
+    def add_deaths(self, num_deaths):
+        ''' <expand for comments> 
+            Update deaths with num_death
+            '''
+            #TODO: This method should add the number of deaths to self.deaths
+        self.deaths += num_deaths
+        
     
     def add_ability(self, ability):
         ''' <expand for comments>
@@ -133,13 +151,96 @@ class Hero:
             
         if self.is_alive():
             print(f'{self.name} won!')
+            self.add_kills(1)
+            opponent.add_deaths(1)
             
+            
+            
+
         else:
             print(f'{opponent.name} won!')
-            
+            self.add_deaths(1)
+            opponent.add_kills(1)
+
+class Weapon(Ability):
+    def attack(self):
+        ''' <expand for comments>
+            This method returns a random value
+            between one half to the full attack power of the weapon.
+            '''
+            # TODO: Use what you learned to complete this method.            
+        half_damage = self.max_damage // 2  
+        return random.randint(half_damage, self.max_damage)
+        
+class Team():
+    def __int__(self, name):
+        ''' <expand for comments>
+            Initialize your team with its team name 
+            '''
+            #TODO: Implement this constructor by assigning the name and heroes, which should be an empty list
+        self.name = name
+        self.heroes = []
+    
+    def remove_hero(self, name):
+        ''' <expand for comments> 
+            Remove hero from heroes list.
+            If Hero isn't found return 0.
+            '''
+            # TODO: Implement this method to remove the hero from the list given their name.
+        for hero in self.heroes:
+            if name == hero.name:
+                self.heroes.remove(hero)
+                break
+
+    def view_all_heroes(self):
+        ''' <expand for comments>
+            Prints out all heroes to the console.
+            '''
+            # TODO: Loop over the list of heroes and print their names to the terminal.
+        for hero in self.heroes:
+            print(hero.name)
+    
+    def add_hero(self, hero):
+        ''' <expand for comments>
+            Add Hero object to self.heroes.'''
+            # TODO: Add the Hero object that is passed in to the list of heroes in
+            # self.heroes
+        self.heroes.append(hero)
+    
+    def attack(self, other_team):
+        ''' <expand for comments>
+            Battle each team against each other.'''
+            # TODO: Randomly select a living hero from each team and have
+            # them fight until one or both teams have no surviving heroes.
+            # Hint: Use the fight method in the Hero class.
+        pass
+
+    def revive_heroes(self, health=100):
+        ''' <expand for comments> 
+            Reset all heroes health to starting_health'''
+            # TODO: This method should reset all heroes health to their
+            # original starting value.
+        pass
+
+    def stats(self):
+        ''' <expand for comments>
+            Print team statistics'''
+            # TODO: This method should print the ratio of kills/deaths for each
+            # member of the team to the screen.
+            # This data must be output to the console.
+            # Hint: Use the information stored in each hero.
+        pass    
+
+        
+
+
+        
+
+        
 if __name__ == "__main__":
     #If you run this file from the terminal 
     #this block is excuted 
+ 
     hero1 = Hero("Wonder Woman")
     hero2 = Hero("Dumbledore")
     ability1 = Ability("Super Speed", 50)
@@ -151,3 +252,4 @@ if __name__ == "__main__":
     hero2.add_ability(ability3)
     hero2.add_ability(ability4)
     hero1.fight(hero2)
+    
