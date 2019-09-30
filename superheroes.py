@@ -21,6 +21,16 @@ class Ability():
         attack_strength = random.randint(0, int(self.max_damage))
         return attack_strength
 
+class Weapon(Ability):
+    def attack(self):
+        ''' <expand for comments>
+            This method returns a random value
+            between one half to the full attack power of the weapon.
+            '''
+            # TODO: Use what you learned to complete this method.            
+        half_damage = int(self.max_damage) // 2  
+        return random.randint(half_damage, int(self.max_damage))
+
 class Armor():
     def __init__(self, name, max_block):
         ''' <expand for comments> 
@@ -35,7 +45,7 @@ class Armor():
     def block(self):
         ''' 
             Return a random value between 0 and the initialized max_block strength. '''
-        block_strength = random.randint(0, self.max_block)
+        block_strength = random.randint(0, int(self.max_block))
         return block_strength
 
 class Hero():
@@ -65,8 +75,7 @@ class Hero():
             Update kills with num_kills
             '''
             #TODO: This method should add the number of kills to self.kills 
-        self.kills += num_kills
-        
+        self.kills += num_kills  
     
     def add_deaths(self, num_deaths):
         ''' <expand for comments> 
@@ -75,7 +84,6 @@ class Hero():
             #TODO: This method should add the number of deaths to self.deaths
         self.deaths += num_deaths
         
-    
     def add_ability(self, ability):
         ''' <expand for comments>
             Add ability to abilities list '''
@@ -158,23 +166,13 @@ class Hero():
             self.take_damage(opp_damage)
             
         if self.is_alive():
-            print(f'{self.name} won!')
+            print(f'\n{self.name} won!')
             self.add_kills(1)
             opponent.add_deaths(1)            
         else:
-            print(f'{opponent.name} won!')
+            print(f'\n{opponent.name} won!')
             self.add_deaths(1)
             opponent.add_kills(1)
-
-class Weapon(Ability):
-    def attack(self):
-        ''' <expand for comments>
-            This method returns a random value
-            between one half to the full attack power of the weapon.
-            '''
-            # TODO: Use what you learned to complete this method.            
-        half_damage = self.max_damage // 2  
-        return random.randint(half_damage, self.max_damage)
         
 class Team():
     def __init__(self, name):
@@ -238,8 +236,7 @@ class Team():
                 opp_team.remove(opp)
             else: 
                 hero_team.remove(hero)
-
-                 
+           
     def revive_heroes(self, health=100):
         ''' <expand for comments> 
             Reset all heroes health to starting_health'''
@@ -256,7 +253,7 @@ class Team():
             # This data must be output to the console.
             # Hint: Use the information stored in each hero.
         for hero in self.heroes:
-            print(f'{hero.name}- Kills: {hero.kills} Deaths: {hero.deaths}')
+            print(f'\n{hero.name}- Kills: {hero.kills} Deaths: {hero.deaths}')
 
 class Arena():
     def __init__(self):
@@ -278,8 +275,7 @@ class Arena():
             # TODO: This method will allow a user to create an ability.
             # Prompt the user for the necessary information to create a new ability object.
             # return the new ability object.        
-        print("Its time to equip your Heroes with their special abilities!")
-        ability_name = input("Enter an ability: ")
+        ability_name = input("Enter an ability name: ")
         max_damage = input(f'Enter damage strength for {ability_name} (0-100): ')
         return Ability(ability_name, max_damage)
     
@@ -291,8 +287,7 @@ class Arena():
             # TODO: This method will allow a user to create a weapon.
             # Prompt the user for the necessary information to create a new weapon object.
             # return the new weapon object.
-        print("Our Heroes need more than abilities to defeat their enemies! Lets give them some tools!")
-        weapon_name = input("Enter a weapon: ")
+        weapon_name = input("Enter a weapon name: ")
         max_damage  = input(f'Enter damage strength for {weapon_name} (0-100): ')
         return Weapon(weapon_name, max_damage)
     
@@ -305,8 +300,7 @@ class Arena():
             #  Prompt the user for the necessary information to create a new armor
             #  object.            
             #  return the new armor object with values set by user.
-        print("Lets get our Heroes battle ready with some ARMOR!")
-        armor_name = input("Enter an armor: ")
+        armor_name = input("Enter armor name: ")
         max_block = input(f'Enter max block for {armor_name} (0-100): ')
         return Armor(armor_name, max_block)
 
@@ -321,8 +315,8 @@ class Arena():
             # Call the methods you made above and use the return values to build
             # your hero.
             # return the new hero object
-        print("Now lets name our Heroes, so we can tell their story!")
-        hero_name = input("Name your Hero: ")
+        print("\nGreat! Now lets name our Heroes, so we can tell their story!")
+        hero_name = input("Name your Hero: ").upper()
         hero = Hero(hero_name)
 
         equip_ability = True 
@@ -330,7 +324,7 @@ class Arena():
         equip_armor   = True 
         
         while equip_ability:
-            print("Would like to equip your Hero with abilites?")
+            print(f"\nWould like to equip {hero_name} with abilites?")
             add_ability = input('Y/N: ').upper() 
             if add_ability == 'Y':
                 ability = self.create_ability()
@@ -339,7 +333,7 @@ class Arena():
                 equip_ability = False 
         
         while equip_weapon:
-            print("Would like to equip your Hero with weapons?")
+            print(f"\nWould like to equip {hero_name} with weapons?")
             add_weapon = input('Y/N: ').upper() 
             if add_weapon == 'Y':
                 weapon = self.create_weapon()
@@ -348,7 +342,7 @@ class Arena():
                 equip_weapon = False 
         
         while equip_armor:
-            print("Would like to equip your Hero with armors?")
+            print(f"\nWould like to equip {hero_name} with armors?")
             add_armor = input('Y/N: ').upper() 
             if add_armor == 'Y':
                 armor = self.create_armor()
@@ -366,8 +360,8 @@ class Arena():
             # Prompt the user for the number of Heroes on team one
             # call self.create_hero() for every hero that the user wants to add to team one.
             # Add the created hero to team one.
-        team_name = input("Create a team name for Team 1: ")
-        team_count = input(f'How many Heroes do want to add to {team_name}: ').isalnum()
+        team_name = input("\nCreate a team name for Team 1: ").upper()
+        team_count = input(f'How many Heroes do want to add to {team_name}? : ').isalnum()
         
         self.team_one = Team(team_name)
 
@@ -383,15 +377,14 @@ class Arena():
             # Prompt the user for the number of Heroes on team two
             # call self.create_hero() for every hero that the user wants to add to team two.
             # Add the created hero to team two.
-        team_name = input("Create a team name Team 2: ")
-        team_count = input(f'How many Heroes do want to add to {team_name}: ').isalnum()
+        team_name = input("\nCreate a team name Team 2: ").upper()
+        team_count = input(f'How many Heroes do want to add to {team_name}? : ').isalnum()
         
         self.team_two = Team(team_name)
 
         for index in range(0, int(team_count)):
             hero = self.create_hero()
             self.team_two.add_hero(hero)
-
 
     def team_battle(self):
         ''' <expand for comments>
@@ -400,12 +393,42 @@ class Arena():
             # Call the attack method that exists in your team objects
             # for that battle functionality.
         self.team_one.attack(self.team_two)
-                
+    
+    def show_stats(self):
+        ''' <expand for comments>
+            Prints team statistics to terminal.'''
+            # TODO: This method should print out battle statistics
+            # including each team's average kill/death ratio.
+            # Required Stats:
+            #     Declare winning team
+            #     Show both teams average kill/death ratio.
+            #     Show surviving heroes.
+        self.team_one.stats()
+        self.team_two.stats()
+            
+
 
 if __name__ == "__main__":
+    game_is_running = True
+
+    # Instantiate Game Arena
     arena = Arena()
 
+    #Build Teams
     arena.build_team_one()
     arena.build_team_two()
 
-    arena.team_battle()
+    while game_is_running:
+
+        arena.team_battle()
+        arena.show_stats()
+        play_again = input("\nPlay Again? Y or N: ")
+
+        #Check for Player Input
+        if play_again.lower() == "n":
+            game_is_running = False
+
+        else:
+            #Revive heroes to play again
+            arena.team_one.revive_heroes()
+            arena.team_two.revive_heroes()
