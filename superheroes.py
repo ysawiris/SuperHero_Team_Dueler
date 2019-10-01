@@ -29,7 +29,7 @@ class Weapon(Ability):
             '''
             # TODO: Use what you learned to complete this method.            
         half_damage = int(self.max_damage) // 2  
-        return random.randint(half_damage, self.max_damage)
+        return random.randint(half_damage, int(self.max_damage))
 
 class Armor():
     def __init__(self, name, max_block):
@@ -45,7 +45,7 @@ class Armor():
     def block(self):
         ''' 
             Return a random value between 0 and the initialized max_block strength. '''
-        block_strength = random.randint(0, self.max_block)
+        block_strength = random.randint(0, int(self.max_block))
         return block_strength
 
 class Hero():
