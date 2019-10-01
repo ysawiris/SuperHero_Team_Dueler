@@ -29,7 +29,7 @@ class Weapon(Ability):
             '''
             # TODO: Use what you learned to complete this method.            
         half_damage = int(self.max_damage) // 2  
-        return random.randint(half_damage, int(self.max_damage))
+        return random.randint(half_damage, self.max_damage)
 
 class Armor():
     def __init__(self, name, max_block):
@@ -45,7 +45,7 @@ class Armor():
     def block(self):
         ''' 
             Return a random value between 0 and the initialized max_block strength. '''
-        block_strength = random.randint(0, int(self.max_block))
+        block_strength = random.randint(0, self.max_block)
         return block_strength
 
 class Hero():
@@ -123,7 +123,7 @@ class Hero():
         #print("Total damage: {}".format(total_damage))
         return total_damage
 
-    def defend(self, damage_amt):
+    def defend(self, damage_amt = 0):
         ''' <expand for comments>
             Runs `block` method on each armor.
             Returns sum of all blocks
@@ -132,13 +132,12 @@ class Hero():
         total_block = 0
 
         for armor in self.armors:
-            block = int(armor.block())
+            block = armor.block()
             total_block += block
-        damage_amt = abs(damage_amt - total_block)
 
         #print("Damage taken: {}".format(damage_amt))
 
-        return damage_amt 
+        return abs(damage_amt - total_block)
 
     def take_damage(self, damage):
         ''' <expand for comments>
@@ -190,9 +189,11 @@ class Team():
             '''
             # TODO: Implement this method to remove the hero from the list given their name.
         for hero in self.heroes:
-            if name == hero.name:
+            if len(self.heroes) and name == hero.name:
                 self.heroes.remove(hero)
                 break
+        else:
+            return 0 
 
     def view_all_heroes(self):
         ''' <expand for comments>
@@ -243,7 +244,7 @@ class Team():
             # TODO: This method should reset all heroes health to their
             # original starting value.
         for hero in self.heroes:
-            hero.starting_health = health 
+            hero.current_health = health 
 
     def stats(self):
         ''' <expand for comments>
@@ -253,7 +254,12 @@ class Team():
             # This data must be output to the console.
             # Hint: Use the information stored in each hero.
         for hero in self.heroes:
-            print(f'\n{hero.name}- Kills: {hero.kills} Deaths: {hero.deaths}')
+            if hero.deaths != 0:
+                ratio = (hero.kills / hero.deaths)
+                print(f'\n{hero.name}- Kills: {hero.kills} Deaths: {hero.deaths} Ratio: {ratio}')
+            else:
+                print(f'\n{hero.name}- Kills: {hero.kills} Deaths: {hero.deaths} Ratio: {hero.kills}')
+                
 
 class Arena():
     def __init__(self):
@@ -361,7 +367,7 @@ class Arena():
             # call self.create_hero() for every hero that the user wants to add to team one.
             # Add the created hero to team one.
         team_name = input("\nCreate a team name for Team 1: ").upper()
-        team_count = input(f'How many Heroes do want to add to {team_name}? : ').isalnum()
+        team_count = input(f'How many Heroes do want to add to {team_name}? : ')
         
         self.team_one = Team(team_name)
 
@@ -378,7 +384,7 @@ class Arena():
             # call self.create_hero() for every hero that the user wants to add to team two.
             # Add the created hero to team two.
         team_name = input("\nCreate a team name Team 2: ").upper()
-        team_count = input(f'How many Heroes do want to add to {team_name}? : ').isalnum()
+        team_count = input(f'How many Heroes do want to add to {team_name}? : ')
         
         self.team_two = Team(team_name)
 
@@ -425,7 +431,7 @@ if __name__ == "__main__":
         play_again = input("\nPlay Again? Y or N: ")
 
         #Check for Player Input
-        if play_again.lower() == "n":
+        if play_again.upper() == "N":
             game_is_running = False
 
         else:
